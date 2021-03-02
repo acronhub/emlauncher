@@ -7,7 +7,6 @@ Develop EMLauncher on docker containers
 ```sh
 git submodule init
 git submodule update
-composer install
 ```
 
 2. Modify configs
@@ -19,17 +18,24 @@ cp config/mfw_serverenv_config{_sample,}.php
 vim config/emlauncher_config.php
 ```
 
-3. Build and run docker
+3. Build docker
 ```sh
-docker-compose up --build
+docker-compose build
 ```
 
-4. Add EMLauncher user
+4. Composer Install
+```sh
+docker-compose up -d
+docker-compose exec web bash
+cd /repo/; composer install
+```
+
+5. Add EMLauncher user
 ```sh
 docker-compose exec db mysql -uroot -ppassword emlauncher -e 'INSERT INTO user_pass (mail) VALUES ("your-name@example.com");'
 ```
 
-5. Open EMLauncher in a browser
+6. Open EMLauncher in a browser
 
 http://localhost:10080
 

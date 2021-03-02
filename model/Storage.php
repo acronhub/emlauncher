@@ -1,6 +1,7 @@
 <?php
 require_once APP_ROOT.'/model/Config.php';
 require_once APP_ROOT.'/model/storage/S3.php';
+require_once APP_ROOT.'/model/storage/GCS.php';
 require_once APP_ROOT.'/model/storage/LocalFile.php';
 
 interface StorageImpl {

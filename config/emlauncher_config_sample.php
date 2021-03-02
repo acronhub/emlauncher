@@ -62,7 +62,17 @@ $emlauncher_config = array(
 			'enable_azuread_auth' => true,
 			'azuread_app_id' => 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
 			'azuread_app_secret' => 'xxxxxxxx',
-			),
+
+			/**
+			 * LDAPアカウントでのログインを許可.
+			 */
+			'enable_ldap_auth' => false, // LDAP認証を有効にする
+			'ldap_host' => "xxxxxxxx.xxx",
+			'ldap_port' => 389,
+			'ldap_dc' => "dc=xxxx,dc=xx,dc=xx",
+			'ldap_atr' => "uid",
+			'ldap_ou' => "ou=Person", 'ldap_email_domain' => "@xxxxxxxx.xxx",
+		),
 
 		/** AppStore, GooglePlayでの制限ファイルサイズ(MB) */
 		'package' => array(
