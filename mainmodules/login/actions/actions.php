@@ -25,6 +25,7 @@ class loginActions extends MainActions
 		$params['enable_password'] = $this->config['enable_password'];
 		$params['enable_google_auth'] = $this->config['enable_google_auth'];
 		$params['enable_azuread_auth'] = $this->config['enable_azuread_auth'];
+		$params['enable_ldap_auth'] = $this->config['enable_ldap_auth'];
 		return parent::build($params);
 	}
 

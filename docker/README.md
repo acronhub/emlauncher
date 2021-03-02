@@ -7,7 +7,7 @@ Develop EMLauncher on docker containers
 ```sh
 git submodule init
 git submodule update
-compose install
+composer install
 ```
 
 2. Modify configs

@@ -137,10 +137,16 @@ $emlauncher_config = array(
 		'title_prefix' => '[Docker] ',
 		'enable_https' => false,
 		'login' => array(
-			'enable_password' => true,
+			'enable_password' => false,
 			'enable_google_auth' => false,
 			'enable_azuread_auth' => false,
-			),
+			'enable_ldap_auth' => true, // LDAP認証を有効にする
+			'ldap_host' => "xxxxxxxx.xxx",
+			'ldap_port' => 389,
+			'ldap_dc' => "dc=xxxx,dc=xx,dc=xx",
+			'ldap_atr' => "uid",
+			'ldap_ou' => "ou=Person", 'ldap_email_domain' => "@xxxxxxxx.xxx",
+		),
 		'package' => array(
 			'file_size_warning_ios' => 150,
 			'file_size_warning_android' => 100,

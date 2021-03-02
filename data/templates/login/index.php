@@ -28,6 +28,27 @@
       </form>
       <?php endif ?>
 
+      <?php if($enable_ldap_auth): ?>
+      <form class="form-horizontal" method="post" action="<?=url('/login/ldap')?>">
+
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="username">ユーザ名</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" id="username" name="username" placeholder="※ユーザ名は@の前まで">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="password">password</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="password" id="password" name="password">
+          </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3">
+          <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+      </form>
+      <?php endif ?>
+
       <?php if($enable_google_auth): ?>
       <div class="google-login col-sm-10 col-sm-offset-1">
         <a class="btn btn-primary col-xs-12" href="<?=url('/login/google')?>">Login with google account</a>
