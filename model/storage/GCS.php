@@ -85,7 +85,7 @@ class GCS implements StorageImpl {
 
 	public function url($key,$expires=null,$filename=null)
 	{
-		$obj_url = "";
-		return $obj_url;
+		$bucket = $this->bucket;
+		return "https://storage.cloud.google.com/${$bucket}/${key}";
 	}
 }
