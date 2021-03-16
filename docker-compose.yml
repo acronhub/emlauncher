@@ -4,7 +4,7 @@ services:
   web:
     build: ./docker/web
     volumes:
-      - ".:/repo"
+      - "${PWD}/app:/repo"
     ports:
       - "10080:80"
   memcached:
