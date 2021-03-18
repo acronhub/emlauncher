@@ -1,0 +1,44 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build web image'
+    args: ['build', '-t', 'gcr.io/ateam-ent-tools/emlauncher-web:$SHORT_SHA', '.', '-f', 'docker/web/Dockerfile']
+
+  # GCR push
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push web to GCR'
+    args: ['push', 'gcr.io/ateam-ent-tools/emlauncher-web:$SHORT_SHA']
+
+  # マニフェストファイルのイメージタグを書き換える
+  - name: 'ruby:2.6-alpine3.10'
+    id: 'edit emlauncher-web manifest'
+    args:
+      - '/bin/sh'
+      - '-c'
+      - sed -i -e 's/COMMIT_SHA/${SHORT_SHA}/' k8s/emlauncher-web.yaml
+
+  # 限定公開クラスタにIP許可する
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'permit to access to the cluster'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        BUILDER_IP=$(curl inet-ip.info)
+        gcloud container clusters update $_CLUSTER_NAME --zone $_CLUSTER_ZONE \
+        --enable-master-authorized-networks --master-authorized-networks=${_MASTER_AUTHORIZED_IP},$${BUILDER_IP}/32
+
+  # deploy
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: 'apply configmap manifest'
+    args: ['apply', '-f', 'k8s/emlauncher-web-configmap-$_ENV.yaml']
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME'
+      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'
+
+  # deploy
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: 'apply emlauncher-symfony manifest'
+    args: ['apply', '-f', 'k8s/emlauncher-web.yaml']
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER_NAME'
+      - 'CLOUDSDK_COMPUTE_ZONE=$_CLUSTER_ZONE'

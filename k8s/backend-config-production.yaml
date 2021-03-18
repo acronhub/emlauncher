@@ -1,0 +1,12 @@
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  name: emlauncher-backend-config
+  namespace: internal
+  labels:
+    name: emlauncher
+spec:
+  securityPolicy:
+    # IP制限なし：""
+    # IP制限あり："emlauncher-ip-whitelist-staging"
+    name: "emlauncher-ip-whitelist-staging"
